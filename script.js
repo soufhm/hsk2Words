@@ -132,7 +132,7 @@ const hsk2Words = [
   { chinese: "⽺⾁", pinyin: "yángròu", arabic: "لحم الضأن", image: "yangrou.jpg", audio: "audio/yangrou.mp3" },
   { chinese: "考试", pinyin: "kǎoshì", arabic: "امتحان", image: "kaoshi.jpg", audio: "audio/kaoshi.mp3" },
   { chinese: "⻄⽠", pinyin: "xīguā", arabic: "بطيخ", image: "xigua.jpg", audio: "audio/xigua.mp3" },
-  { chinese: "觉得", pinyin: "juéde", arabic: "يشعر/يعتقد", image: "jueder.jpg", audio: "audio/jueder.mp3" },
+  { chinese: "觉得", pinyin: "juéde", arabic: "يشعر/يعتقد", image: "jueder.jpg", audio: "audio/juede.mp3" },
   { chinese: "说话", pinyin: "shuōhuà", arabic: "يتحدث", image: "shuohua.jpg", audio: "audio/shuohua.mp3" },
   { chinese: "起床", pinyin: "qǐchuáng", arabic: "يستيقظ", image: "qichuang.jpg", audio: "audio/qichuang.mp3" },
   { chinese: "跑步", pinyin: "pǎobù", arabic: "يركض", image: "paob.jpg", audio: "audio/paob.mp3" },
