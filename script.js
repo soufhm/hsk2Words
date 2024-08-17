@@ -111,7 +111,7 @@ const hsk2Words = [
   { chinese: "意思", pinyin: "yìsi", arabic: "معنى", image: "yisi.jpg", audio: "audio/yisi.mp3" },
   { chinese: "房间", pinyin: "fángjiān", arabic: "غرفة", image: "fangjian.jpg", audio: "audio/fangjian.mp3" },
   { chinese: "⼿机", pinyin: "shǒujī", arabic: "هاتف", image: "shouji.jpg", audio: "audio/shouji.mp3" },
-  { chinese: "⼿表", pinyin: "shǒubiǎo", arabic: "ساعة يد", image: "shoubia.jpg", audio: "audio/shoubia.mp3" },
+  { chinese: "⼿表", pinyin: "shǒubiǎo", arabic: "ساعة يد", image: "shoubia.jpg", audio: "audio/shoubiao.mp3" },
   { chinese: "报纸", pinyin: "bàozhǐ", arabic: "صحيفة", image: "baozhi.jpg", audio: "audio/baozhi.mp3" },
   { chinese: "教室", pinyin: "jiàoshì", arabic: "فصل دراسي", image: "jiaoshi.jpg", audio: "audio/jiaoshi.mp3" },
   { chinese: "旁边", pinyin: "pángbiān", arabic: "بجانب", image: "pangbian.jpg", audio: "audio/pangbian.mp3" },
