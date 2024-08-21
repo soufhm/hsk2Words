@@ -155,142 +155,106 @@ const hsk2Words = [
   { chinese: "虽然但是", pinyin: "suīrán dànshì", arabic: "على الرغم من أن/لكن", image: "suirandanshi.jpg", audio: "audio/suirandanshi.mp3" }
 ];
 
-// ... باقي الكود ...
-  
-  // ... باقي الكود ...
-  
-  const wordList = document.getElementById("word-list");
-  
+const wordList = document.getElementById("word-list");
+const timerElement = document.getElementById('timer');
+const minutesInput = document.getElementById('minutes');
+const startButton = document.getElementById('startTimer');
+const timeoutSound = document.getElementById('timeoutSound');
+const showPinyinButton = document.getElementById('showPinyin');
+const shuffleButton = document.getElementById('shuffleButton'); 
+
+let startTime; 
+let timerInterval; 
+
+// دالة لإنشاء قائمة الكلمات
+function createWordList() {
+  // مسح محتوى قائمة الكلمات
+  wordList.innerHTML = '';
+
+  // إعادة إنشاء قائمة الكلمات 
   hsk2Words.forEach((word, index) => { 
     const listItem = document.createElement("li");
-    //  إضافة عنصر  <audio>   لتشغيل الصوت  
     listItem.innerHTML = `
       <span class="word-number">${index + 1}. </span> <span class="chinese">${word.chinese}</span>
       <span class="pinyin">${word.pinyin}</span>
       <audio src="${word.audio}"></audio> 
     `;
-  
+
     listItem.addEventListener('click', () => {
       const pinyinSpan = listItem.querySelector('.pinyin');
-      pinyinSpan.classList.toggle('show');
-  
+      pinyinSpan.classList.add('show'); // أضف class show عند النقر
+
       // تشغيل الصوت عند النقر على الكلمة
       const audio = listItem.querySelector('audio');
       audio.currentTime = 0; // إعادة تشغيل الصوت من البداية
       audio.play(); 
-    });
-  
-    wordList.appendChild(listItem);
-  });
-  
-  // كود إخفاء البينيين بعد الظهور
-  
-  const wordElements = document.querySelectorAll('#word-list li');
-  
-  wordElements.forEach(word => {
-    word.addEventListener('click', () => {
-      const pinyin = word.querySelector('.pinyin');
-      pinyin.classList.add('show');
-  
+
+      // اخفاء البينيين بعد ثانية 
       setTimeout(() => {
-        pinyin.classList.remove('show');
-      }, 1000); // نخفي البينيين بعد ثانية واحدة (1000 ميلي ثانية)
+        pinyinSpan.classList.remove('show'); // أزل class show بعد ثانية
+      }, 1000);
     });
-  });
-  
-  
-  // ... أكواد JavaScript  السابقة ...
-  
-  
-  
-  const timerElement = document.getElementById('timer');
-  const minutesInput = document.getElementById('minutes');
-  const startButton = document.getElementById('startTimer');
-  const timeoutSound = document.getElementById('timeoutSound');
-  
-  let startTime; // لتخزين الوقت المتبقي
-  let timerInterval; // لتخزين معرّف فترة زمنية لتشغيل المؤقت
-  
-  function startTimer() {
-    const minutes = parseInt(minutesInput.value);
-    if (isNaN(minutes) || minutes < 1 || minutes > 10) {
-      alert('Please enter a number between 1 and 10.');
-      return;
-    }
-  
-    startTime = minutes * 60; 
-    timerElement.innerText = `${minutes.toString().padStart(2, '0')}:00`;
-  
-    timerInterval = setInterval(updateTimer, 1000); 
-  }
-  
-  function updateTimer() {
-    if (startTime > 0) {
-      const minutes = Math.floor(startTime / 60);
-      const seconds = startTime % 60;
-      timerElement.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-      startTime--;
-    } else {
-      clearInterval(timerInterval);
-      timerElement.innerText = "Stop, time is up!"; 
-      timeoutSound.play(); 
-    }
-  }
-  
-  startButton.addEventListener('click', startTimer);
-  
-  
-  
-  // ... بقية الكود JavaScript ...
-  
-  const showPinyinButton = document.getElementById('showPinyin');
-  
-  // دالة لإظهار/إخفاء البينيين وتغيير نص الزر 
-  function togglePinyin() {
-    const pinyinElements = document.querySelectorAll('.pinyin');
-    pinyinElements.forEach(pinyin => {
-      pinyin.classList.toggle('show');
-    });
-  
-    //  تغيير نص الزر 
-    if (showPinyinButton.innerText === 'Show Pinyin') {
-      showPinyinButton.innerText = 'Hide Pinyin';
-    } else {
-      showPinyinButton.innerText = 'Show Pinyin';
-    }
-  }
-  
-  // أضف حدث النقر للزر
-  showPinyinButton.addEventListener('click', togglePinyin);
 
-// ...  كود  JavaScript  السابق  ...
-
-// دالة لخلط الكلمات عشوائيًا
-function shuffleWords() {
-  for (let i = words.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [words[i], words[j]] = [words[j], words[i]]; 
-  }
-
-  //  إعادة إنشاء  word-list 
-  wordList.innerHTML = ''; 
-  words.forEach((word, index) => {
-    const listItem = document.createElement("li");
-    listItem.innerHTML = `
-      <span class="word-number">${index + 1}. </span> <span class="chinese">${word.chinese}</span>
-      <span class="pinyin">${word.pinyin}</span>
-      <audio src="${word.audio}"></audio> 
-    `;
-    listItem.addEventListener('click', () => {
-      const pinyinSpan = listItem.querySelector('.pinyin');
-      pinyinSpan.classList.toggle('show');
-      const audio = listItem.querySelector('audio');
-      audio.currentTime = 0;
-      audio.play(); 
-    });
     wordList.appendChild(listItem);
   });
 }
 
-const shuffleButton = document.getElementById('shuffleButton');
-shuffleButton.addEventListener('click', shuffleWords);
+// دالة لخلط الكلمات بشكل عشوائي
+function shuffleWords() {
+  for (let i = hsk2Words.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [hsk2Words[i], hsk2Words[j]] = [hsk2Words[j], hsk2Words[i]];
+  }
+  createWordList(); 
+}
+
+// دالة لبدء المؤقت
+function startTimer() {
+  const minutes = parseInt(minutesInput.value);
+  if (isNaN(minutes) || minutes < 1 || minutes > 10) {
+    alert('Please enter a number between 1 and 10.');
+    return;
+  }
+
+  startTime = minutes * 60; 
+  timerElement.innerText = `${minutes.toString().padStart(2, '0')}:00`;
+
+  timerInterval = setInterval(updateTimer, 1000); 
+}
+
+// دالة لتحديث المؤقت
+function updateTimer() {
+  if (startTime > 0) {
+    const minutes = Math.floor(startTime / 60);
+    const seconds = startTime % 60;
+    timerElement.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    startTime--;
+  } else {
+    clearInterval(timerInterval);
+    timerElement.innerText = "Stop, time is up!"; 
+    timeoutSound.play(); 
+  }
+}
+
+// دالة لإظهار/إخفاء البينيين وتغيير نص الزر 
+function togglePinyin() {
+  const pinyinElements = document.querySelectorAll('.pinyin');
+  pinyinElements.forEach(pinyin => {
+    pinyin.classList.toggle('show');
+  });
+
+  //  تغيير نص الزر 
+  if (showPinyinButton.innerText === 'Show Pinyin') {
+    showPinyinButton.innerText = 'Hide Pinyin';
+  } else {
+    showPinyinButton.innerText = 'Show Pinyin';
+  }
+}
+
+// إضافة Events Listeners للزر 
+startButton.addEventListener('click', startTimer);
+showPinyinButton.addEventListener('click', togglePinyin);
+shuffleButton.addEventListener('click', shuffleWords); 
+
+// إنشاء القائمة عند تحميل الصفحة
+createWordList(); 
